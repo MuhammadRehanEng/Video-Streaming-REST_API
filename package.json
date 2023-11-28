@@ -1,0 +1,18 @@
+{
+  "name": "video-streaming-rest-api",
+  "version": "1.0.0",
+  "description": "This is video streaming rest api's for learning purpose",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "JavaScript",
+    "Backend",
+    "NodeJS",
+    "ExpressJS",
+    "MongoDB"
+  ],
+  "author": "Muhammad Reahan",
+  "license": "ISC"
+}
