@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 import jwt from "jsonwebtoken";
-import bcrypt, { hash } from "bcrypt";
+import bcrypt from "bcrypt";
 const userSchema = new Schema(
   {
     username: {
@@ -49,7 +49,7 @@ const userSchema = new Schema(
 
 // for hashing password
 userSchema.pre("save", async function (next) {
-  // isModified mongoose ke andar available hota hai
+  // "isModified" mongoose pre-built function
   if (!this.isModified("password")) return next();
 
   this.password = bcrypt.hash(this.password, 10);
