@@ -1,27 +1,29 @@
 import mongoose, { Schema, model } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
 const userSchema = new Schema(
   {
     username: {
-      type: String,
-      required: [true, "Username is required"],
-      unique: true,
-      lowercase: true,
-      trim: true,
-    },
-    email: {
-      type: String,
-      required: [true, "Email is required"],
-      trim: true,
-      index: true,
-    },
-    fullName: {
       type: String,
       required: true,
       unique: true,
       lowercase: true,
       trim: true,
+      index: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowecase: true,
+      trim: true,
+    },
+    fullName: {
+      type: String,
+      required: true,
+      trim: true,
+      index: true,
     },
     avatar: {
       type: String, // Cloudinary URL for uploading images
