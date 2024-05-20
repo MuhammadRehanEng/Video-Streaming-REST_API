@@ -54,15 +54,15 @@ userSchema.pre("save", async function (next) {
   // "isModified" mongoose pre-built function
   if (!this.isModified("password")) return next();
 
-  this.password = bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
 // for comparing user password with database hashed password
-userSchema.methods.isPasswordCorrect = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+userSchema.methods.isPasswordCorrect = async function (password) {
+  return await bcrypt.compare(password, this.password);
 };
-
+// access token are short lived
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     {
@@ -78,6 +78,7 @@ userSchema.methods.generateAccessToken = function () {
   );
 };
 
+// refresh token are long lived
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
