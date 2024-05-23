@@ -221,19 +221,30 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 });
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
-  const { oldPassword, newPassword } = req.body;
+  // const { oldPassword, newPassword } = req.body;
+  // // req.user is comming from authMiddleware
+  // const user = await User.findById(req.user?._id);
+  // // yahan yeh old password ko match karega db wale password se agr password sahi hai toh usko naye password ke sath replace kar dega
+  // const passwordChecking = await user.isPasswordCorrect(oldPassword);
+  // if (!passwordChecking) {
+  //   throw new ApiError(400, "Invalid Old Password");
+  // }
+  // user.password = newPassword;
+  // await user.save({ validateBeforeSave: false });
+  // return res
+  //   .status(200)
+  //   .json(new ApiResponse(200, {}, "Password Succesfully Changed"));
 
-  // req.user is comming from authMiddleware
-  const user = await User.findById(req.user?._id);
-  // yahan yeh old password ko match karega db wale password se agr password sahi hai toh usko naye password ke sath replace kar dega
-  const passwordChecking = await user.isPasswordCorrect(oldPassword);
+  const { currentPassword, newPassword } = req.body;
 
-  if (!passwordChecking) {
-    throw new ApiError(400, "Invalid Old Password");
+  const user = await User.findById(req.user._id);
+  const isPasswordValid = await user.isPasswordCorrect(currentPassword);
+  if (!isPasswordValid) {
+    throw new ApiError(400, "current password is incorrect");
   }
 
   user.password = newPassword;
-  await user.save({ validateBeforeSave: false });
+  user.save({ validateBeforeSave: false });
 
   return res
     .status(200)
